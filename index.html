@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бритва — барбершоп на Покровке</title>
+<meta name="description" content="Мужские стрижки, бритьё опасной бритвой и уход за бородой. Онлайн-запись к мастеру.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Jost:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--green:#1F3A2E;--green-d:#142821;--brass:#B08D57;--brass-l:#D9BD8C;--paper:#F1F1EC;--ink:#18201C;--muted:#5F6A64;--line:#CFD3CB;--err:#B3261E}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:17px/1.6 Jost,system-ui,sans-serif;background:var(--paper);color:var(--ink)}
+h1,h2,h3{font-family:"Old Standard TT",Georgia,serif;font-weight:700;line-height:1.1;margin:0 0 .5em}
+h1{font-size:clamp(2.4rem,6vw,4.6rem)}
+h2{font-size:clamp(1.8rem,4vw,2.8rem)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--brass);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem)}
+.btn{display:inline-block;padding:.9em 1.6em;border:2px solid var(--brass);background:var(--brass);color:var(--green-d);font:700 1rem Jost,sans-serif;text-decoration:none;cursor:pointer;border-radius:2px}
+.btn:hover{background:var(--brass-l);border-color:var(--brass-l)}
+.btn.ghost{background:transparent;color:inherit}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+header{position:absolute;inset:0 0 auto;z-index:5;color:var(--paper)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:1.2rem;padding-bottom:1.2rem}
+.logo{font:700 1.6rem "Old Standard TT",serif;text-decoration:none}
+header nav{display:flex;gap:1.6rem}
+header nav a{text-decoration:none;opacity:.85}
+header nav a:hover{opacity:1;color:var(--brass-l)}
+
+.hero{background:var(--green);color:var(--paper);padding:8rem 0 5rem}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center}
+.hero p{font-size:1.2rem;max-width:30em;opacity:.9}
+.hero .actions{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.board{border:2px solid var(--brass);padding:2rem;position:relative}
+.board::before{content:"";position:absolute;inset:6px;border:1px solid rgba(176,141,87,.45);pointer-events:none}
+.board h2{font-size:1.6rem;text-align:center;color:var(--brass-l)}
+.price-list{list-style:none;margin:0;padding:0}
+.price-list li{display:flex;align-items:baseline;gap:.5rem;padding:.45rem 0}
+.price-list .dots{flex:1;border-bottom:2px dotted rgba(241,241,236,.35);transform:translateY(-.3em)}
+.price-list b{font-family:"Old Standard TT",serif;font-size:1.15rem}
+
+section{padding:clamp(3.5rem,8vw,6rem) 0}
+.lead{max-width:40em;color:var(--muted);font-size:1.1rem;margin-top:-.2rem}
+
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 3rem;margin-top:2rem}
+.service{padding:1.4rem 0;border-top:1px solid var(--line)}
+.service header{position:static;color:inherit;display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.service h3{font-size:1.35rem;margin:0}
+.service .cost{font:700 1.2rem "Old Standard TT",serif;white-space:nowrap}
+.service p{margin:.4rem 0 0;color:var(--muted)}
+
+.masters{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem;margin-top:2rem}
+.master{background:#fff;border:1px solid var(--line);padding:1.5rem}
+.portrait{aspect-ratio:1;display:grid;place-items:center;background:var(--green);color:var(--brass-l);font:700 3.2rem "Old Standard TT",serif;margin-bottom:1rem}
+.master h3{font-size:1.4rem;margin:0}
+.master p{margin:.3rem 0;color:var(--muted)}
+.master .btn{margin-top:.8rem;width:100%}
+
+#booking{background:var(--green-d);color:var(--paper)}
+#booking .lead{color:#AEB9B2}
+.booker{display:grid;grid-template-columns:1fr 300px;gap:2.5rem;margin-top:2rem}
+.steps{display:flex;gap:.4rem;list-style:none;padding:0;margin:0 0 1.5rem;counter-reset:s}
+.steps li{flex:1;padding:.6rem 0;border-top:3px solid #34483F;color:#8D9A93;font-size:.9rem;counter-increment:s}
+.steps li::before{content:counter(s) ". "}
+.steps li.done,.steps li.active{border-color:var(--brass);color:var(--paper)}
+.panel[hidden]{display:none}
+.panel h3{font-size:1.6rem}
+.choices{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.7rem}
+.choice{text-align:left;background:transparent;color:var(--paper);border:1px solid #3D5248;padding:1rem;cursor:pointer;font:inherit;border-radius:2px}
+.choice small{display:block;color:#9FAEA6}
+.choice:hover{border-color:var(--brass)}
+.choice[aria-pressed="true"]{border-color:var(--brass);background:rgba(176,141,87,.15)}
+.choice[disabled]{opacity:.3;cursor:not-allowed;text-decoration:line-through}
+.days{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.5rem;margin-bottom:1rem}
+.days .choice{min-width:84px;text-align:center}
+.times{grid-template-columns:repeat(auto-fill,minmax(84px,1fr))}
+.times .choice{text-align:center;padding:.6rem}
+.nav-btns{display:flex;justify-content:space-between;gap:1rem;margin-top:1.8rem}
+.field{display:grid;gap:.3rem;margin-bottom:1rem;max-width:420px}
+.field input,.field textarea{font:inherit;padding:.75em .9em;border:1px solid #3D5248;background:#0E1E18;color:var(--paper);border-radius:2px}
+.field input[aria-invalid="true"]{border-color:#E8897F}
+.error{color:#F2A49C;min-height:1.3em;margin:0}
+.summary{border:1px solid var(--brass);padding:1.5rem;align-self:start;position:sticky;top:1.5rem}
+.summary h3{font-size:1.3rem;color:var(--brass-l)}
+.summary dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.5rem 1rem}
+.summary dt{color:#9FAEA6}
+.summary dd{margin:0;text-align:right}
+.summary .sum{border-top:1px solid #3D5248;margin-top:1rem;padding-top:1rem;display:flex;justify-content:space-between;font:700 1.3rem "Old Standard TT",serif}
+.done-msg{border-left:4px solid var(--brass);padding:1rem 1.5rem;background:rgba(176,141,87,.1)}
+
+.reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-top:2rem}
+blockquote{margin:0;font:400 1.25rem/1.5 "Old Standard TT",serif}
+blockquote footer{font:500 .95rem Jost,sans-serif;color:var(--muted);margin-top:.8rem}
+
+.contacts{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+.status{display:inline-block;padding:.3em .8em;border-radius:99px;font-weight:500;margin-bottom:1rem}
+.status.open{background:#DCEBDF;color:#1D5A33}
+.status.closed{background:#F3DEDC;color:#8A2A22}
+.hours{width:100%;border-collapse:collapse}
+.hours td{padding:.45rem 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right}
+.hours tr.today{font-weight:700}
+footer.site{background:var(--green-d);color:#9FAEA6;padding:2rem 0;font-size:.9rem}
+
+@media (max-width:860px){
+  .hero .wrap,.booker,.contacts{grid-template-columns:1fr}
+  header nav{display:none}
+  .summary{position:static}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#">Бритва</a>
+    <nav><a href="#services">Услуги</a><a href="#masters">Мастера</a><a href="#booking">Запись</a><a href="#contacts">Контакты</a></nav>
+    <a class="btn ghost" href="#booking">Записаться</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Стрижём и бреем на Покровке с 2016 года</h1>
+      <p>Классические мужские стрижки, бритьё опасной бритвой и уход за бородой. Без спешки: на каждого гостя закладываем полный час.</p>
+      <div class="actions">
+        <a class="btn" href="#booking">Выбрать время</a>
+        <a class="btn ghost" href="tel:+74950000001">+7 495 000-00-01</a>
+      </div>
+    </div>
+    <div class="board" aria-label="Популярные услуги">
+      <h2>Сегодня в кресле</h2>
+      <ul class="price-list" id="boardList"></ul>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <h2>Услуги и цены</h2>
+    <p class="lead">Цена одинакова у всех мастеров. Горячее полотенце и укладка входят в каждую услугу.</p>
+    <div class="services" id="servicesList"></div>
+  </div>
+</section>
+
+<section id="masters" style="padding-top:0">
+  <div class="wrap">
+    <h2>Мастера</h2>
+    <p class="lead">Выберите мастера или доверьтесь тому, кто свободен в удобное время.</p>
+    <div class="masters" id="mastersList"></div>
+  </div>
+</section>
+
+<section id="booking">
+  <div class="wrap">
+    <h2>Онлайн-запись</h2>
+    <p class="lead">Четыре шага, около минуты. Напомним о визите сообщением за два часа.</p>
+    <div class="booker">
+      <div>
+        <ol class="steps" id="steps"><li>Услуга</li><li>Мастер</li><li>Время</li><li>Контакты</li></ol>
+        <div class="panel" data-step="0"><h3>Что делаем?</h3><div class="choices" id="pickService"></div></div>
+        <div class="panel" data-step="1" hidden><h3>К кому записать?</h3><div class="choices" id="pickMaster"></div></div>
+        <div class="panel" data-step="2" hidden>
+          <h3>Когда удобно?</h3>
+          <div class="days" id="pickDay"></div>
+          <div class="choices times" id="pickTime"></div>
+        </div>
+        <form class="panel" data-step="3" id="contactForm" hidden novalidate>
+          <h3>Как с вами связаться?</h3>
+          <label class="field">Имя<input name="name" autocomplete="name" required></label>
+          <label class="field">Телефон<input name="phone" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></label>
+          <label class="field">Комментарий для мастера<textarea name="comment" rows="2" placeholder="Например, хочу оставить длину на макушке"></textarea></label>
+          <p class="error" id="formError" role="alert"></p>
+        </form>
+        <div class="panel" data-step="4" hidden><div class="done-msg" id="doneMsg"></div></div>
+        <div class="nav-btns" id="navBtns">
+          <button class="btn ghost" type="button" id="back">Назад</button>
+          <button class="btn" type="button" id="next" disabled>Далее</button>
+        </div>
+      </div>
+      <aside class="summary" aria-live="polite">
+        <h3>Ваша запись</h3>
+        <dl>
+          <dt>Услуга</dt><dd id="sumService">не выбрана</dd>
+          <dt>Мастер</dt><dd id="sumMaster">не выбран</dd>
+          <dt>Когда</dt><dd id="sumWhen">не выбрано</dd>
+          <dt>Длится</dt><dd id="sumDur">—</dd>
+        </dl>
+        <p class="sum"><span>К оплате</span><span id="sumPrice">0 ₽</span></p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="wrap">
+    <h2>Что говорят гости</h2>
+    <div class="reviews">
+      <blockquote>Хожу к Артёму третий год. Ни разу не пришлось объяснять, что я хочу: он помнит, как стриг в прошлый раз.<footer>Дмитрий, Яндекс Карты</footer></blockquote>
+      <blockquote>Первое бритьё опасной бритвой в жизни. Ни одного пореза, а кожа после него как после недели отпуска.<footer>Илья, 2ГИС</footer></blockquote>
+      <blockquote>Записался онлайн в 9 утра на обед, пришёл, сразу сел в кресло. Так и должно быть.<footer>Сергей, Google</footer></blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="contacts" style="padding-top:0">
+  <div class="wrap contacts">
+    <div>
+      <h2>Как нас найти</h2>
+      <span class="status" id="openStatus"></span>
+      <p>Москва, ул. Покровка, 31, вход со двора<br>5 минут пешком от метро «Курская»</p>
+      <p><a href="tel:+74950000001">+7 495 000-00-01</a></p>
+    </div>
+    <table class="hours" id="hours" aria-label="Часы работы"></table>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap">© 2016–2026 Барбершоп «Бритва» · Покровка, 31</div></footer>
+
+<script>
+const SERVICES = [
+  {id:'cut',   name:'Мужская стрижка',         price:2200, dur:60, text:'Ножницы и машинка, мытьё головы, укладка.'},
+  {id:'fade',  name:'Фейд',                    price:2500, dur:60, text:'Плавный переход от кожи, контур бритвой.'},
+  {id:'beard', name:'Моделирование бороды',    price:1600, dur:40, text:'Форма, контур, масло и бальзам.'},
+  {id:'shave', name:'Королевское бритьё',      price:2000, dur:45, text:'Опасная бритва, три горячих полотенца, маска.'},
+  {id:'combo', name:'Стрижка и борода',        price:3400, dur:90, text:'Полный образ за один визит.'},
+  {id:'kid',   name:'Детская стрижка до 12 лет', price:1500, dur:40, text:'Терпеливо и без слёз.'}
+];
+const MASTERS = [
+  {id:'any',   name:'Любой свободный', exp:'', note:'Покажем все свободные окна', initial:'?'},
+  {id:'artem', name:'Артём', exp:'Стаж 9 лет', note:'Классика и короткие стрижки', initial:'А'},
+  {id:'ruslan',name:'Руслан', exp:'Стаж 6 лет', note:'Фейды и текстурные стрижки', initial:'Р'},
+  {id:'oleg',  name:'Олег', exp:'Стаж 12 лет', note:'Бритьё и борода', initial:'О'},
+  {id:'timur', name:'Тимур', exp:'Стаж 4 года', note:'Детские и подростковые стрижки', initial:'Т'}
+];
+const HOURS = [['Понедельник',10,22],['Вторник',10,22],['Среда',10,22],['Четверг',10,22],['Пятница',10,23],['Суббота',9,23],['Воскресенье',9,21]];
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rub = n => n.toLocaleString('ru-RU') + ' ₽';
+
+$('#boardList').innerHTML = SERVICES.slice(0,5).map(s => `<li><span>${s.name}</span><span class="dots"></span><b>${s.price.toLocaleString('ru-RU')}</b></li>`).join('');
+$('#servicesList').innerHTML = SERVICES.map(s => `
+  <article class="service"><header><h3>${s.name}</h3><span class="cost">${rub(s.price)}</span></header>
+  <p>${s.text} ${s.dur} мин.</p></article>`).join('');
+$('#mastersList').innerHTML = MASTERS.filter(m => m.id !== 'any').map(m => `
+  <article class="master"><div class="portrait" aria-hidden="true">${m.initial}</div>
+  <h3>${m.name}</h3><p>${m.exp}</p><p>${m.note}</p>
+  <button class="btn ghost" type="button" data-book-master="${m.id}">Записаться к ${m.name.replace(/м$/,'му').replace(/н$/,'ну').replace(/г$/,'гу').replace(/р$/,'ру')}</button></article>`).join('');
+
+/* ---------- Пошаговая запись ---------- */
+const booking = {step:0, service:null, master:null, day:null, time:null};
+const days = Array.from({length:10}, (_, i) => { const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() + i); return d; });
+
+// Детерминированная «занятость», чтобы демо выглядело живым и не менялось при перерисовке
+function hash(str){ let h = 0; for (const c of str) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; }
+function isBusy(day, time, masterId){
+  const ids = masterId === 'any' ? MASTERS.slice(1).map(m => m.id) : [masterId];
+  return ids.every(id => hash(day.toDateString() + time + id) % 3 === 0);
+}
+function slotsFor(day){
+  const [, open, close] = HOURS[(day.getDay() + 6) % 7];
+  const now = new Date(), res = [];
+  for (let h = open; h < close; h++) for (const m of [0, 30]) {
+    const t = new Date(day); t.setHours(h, m);
+    if (t > now) res.push(`${String(h).padStart(2,'0')}:${m ? '30' : '00'}`);
+  }
+  return res;
+}
+
+function choiceBtn(attrs, title, sub, pressed, disabled){
+  return `<button type="button" class="choice" ${attrs} aria-pressed="${pressed}" ${disabled ? 'disabled' : ''}>${title}${sub ? `<small>${sub}</small>` : ''}</button>`;
+}
+
+function render(){
+  document.querySelectorAll('.panel').forEach(p => p.hidden = +p.dataset.step !== booking.step);
+  document.querySelectorAll('#steps li').forEach((li, i) => {
+    li.className = i < booking.step ? 'done' : i === booking.step ? 'active' : '';
+    if (i === booking.step) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+  });
+  $('#pickService').innerHTML = SERVICES.map(s => choiceBtn(`data-service="${s.id}"`, s.name, `${rub(s.price)}, ${s.dur} мин`, booking.service === s.id)).join('');
+  $('#pickMaster').innerHTML = MASTERS.map(m => choiceBtn(`data-master="${m.id}"`, m.name, m.note, booking.master === m.id)).join('');
+  $('#pickDay').innerHTML = days.map((d, i) => choiceBtn(`data-day="${i}"`,
+    d.toLocaleDateString('ru-RU', {weekday:'short'}), d.toLocaleDateString('ru-RU', {day:'numeric', month:'short'}),
+    booking.day === i, !slotsFor(d).length)).join('');
+  if (booking.day !== null){
+    const d = days[booking.day], slots = slotsFor(d);
+    $('#pickTime').innerHTML = slots.map(t => choiceBtn(`data-time="${t}"`, t, '', booking.time === t, isBusy(d, t, booking.master || 'any'))).join('');
+  } else $('#pickTime').innerHTML = '<p>Выберите день, чтобы увидеть свободное время.</p>';
+
+  const s = SERVICES.find(x => x.id === booking.service), m = MASTERS.find(x => x.id === booking.master);
+  $('#sumService').textContent = s ? s.name : 'не выбрана';
+  $('#sumMaster').textContent = m ? m.name : 'не выбран';
+  $('#sumWhen').textContent = booking.day !== null && booking.time ? `${days[booking.day].toLocaleDateString('ru-RU', {day:'numeric', month:'long'})}, ${booking.time}` : 'не выбрано';
+  $('#sumDur').textContent = s ? `${s.dur} мин` : '—';
+  $('#sumPrice').textContent = rub(s ? s.price : 0);
+
+  const ready = [booking.service, booking.master, booking.time, true][booking.step];
+  $('#next').disabled = !ready;
+  $('#next').textContent = booking.step === 3 ? 'Подтвердить запись' : 'Далее';
+  $('#back').style.visibility = booking.step > 0 && booking.step < 4 ? 'visible' : 'hidden';
+  $('#navBtns').hidden = booking.step === 4;
+}
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-service],[data-master],[data-day],[data-time],[data-book-master]');
+  if (!el) return;
+  if (el.dataset.service) booking.service = el.dataset.service;
+  if (el.dataset.master) booking.master = el.dataset.master;
+  if (el.dataset.day) { booking.day = +el.dataset.day; booking.time = null; }
+  if (el.dataset.time) booking.time = el.dataset.time;
+  if (el.dataset.bookMaster) { booking.master = el.dataset.bookMaster; booking.step = booking.service ? 2 : 0; $('#booking').scrollIntoView(); }
+  // Выбранное время могло быть свободно у прежнего мастера, а у нового занято
+  if ((el.dataset.master || el.dataset.bookMaster) && booking.day !== null && booking.time && isBusy(days[booking.day], booking.time, booking.master)) booking.time = null;
+  render();
+});
+$('#back').addEventListener('click', () => { booking.step--; render(); });
+$('#next').addEventListener('click', () => {
+  if (booking.step < 3) { booking.step++; render(); return; }
+  const form = $('#contactForm'), name = form.name, phone = form.phone;
+  const okName = name.value.trim().length >= 2, okPhone = phone.value.replace(/\D/g,'').length === 11;
+  name.setAttribute('aria-invalid', !okName); phone.setAttribute('aria-invalid', !okPhone);
+  if (!okName || !okPhone) { $('#formError').textContent = !okName ? 'Введите имя, хотя бы две буквы.' : 'Введите телефон полностью: 11 цифр.'; return; }
+  $('#formError').textContent = '';
+  const s = SERVICES.find(x => x.id === booking.service);
+  $('#doneMsg').innerHTML = `<h3>Готово, ${esc(name.value.trim())}!</h3><p>${s.name}, ${$('#sumWhen').textContent}. Мастер: ${$('#sumMaster').textContent}.</p><p>Напомним о визите на ${esc(phone.value)} за два часа.</p>`;
+  booking.step = 4; render();
+});
+$('#contactForm').phone.addEventListener('input', e => {
+  let d = e.target.value.replace(/\D/g,''); if (d[0] === '8') d = '7' + d.slice(1); if (d[0] !== '7') d = '7' + d; d = d.slice(0, 11);
+  let o = '+7'; if (d.length > 1) o += ' (' + d.slice(1,4); if (d.length > 4) o += ') ' + d.slice(4,7); if (d.length > 7) o += '-' + d.slice(7,9); if (d.length > 9) o += '-' + d.slice(9);
+  e.target.value = o;
+});
+
+/* ---------- Часы работы ---------- */
+const now = new Date(), todayIdx = (now.getDay() + 6) % 7, [, o, c] = HOURS[todayIdx];
+const isOpen = now.getHours() >= o && now.getHours() < c;
+$('#openStatus').className = 'status ' + (isOpen ? 'open' : 'closed');
+$('#openStatus').textContent = isOpen ? `Открыто до ${c}:00` : `Закрыто, откроемся в ${HOURS[now.getHours() >= c ? (todayIdx + 1) % 7 : todayIdx][1]}:00`;
+$('#hours').innerHTML = HOURS.map(([d, a, b], i) => `<tr class="${i === todayIdx ? 'today' : ''}"><td>${d}</td><td>${a}:00–${b}:00</td></tr>`).join('');
+
+render();
+</script>
+</body>
+</html>
